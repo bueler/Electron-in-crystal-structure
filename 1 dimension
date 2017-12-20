@@ -21,23 +21,22 @@
 
 
 % physical parameters and function
-k = 40;			% number of atoms
+k = 40;				% number of atoms
 hbar = 1.05457e-34;   mass = 9.10938e-31;   c = (hbar^2)/(2*mass);
-m = 3e-10;		% distance between atoms
-V0 = 10e30*hbar;	% The depth of the potential wells   % TOO SMALL!
-V = @(x) V0*cos(x*2*pi/m); % The potential energy function
+m = 3e-10;			% distance between atoms
+V0 = 10e30*hbar;		% The depth of the potential wells
+V = @(x) V0*cos(x*2*pi/m); 	% The potential energy function
 
 % numerical parameters
-s = 20;		% number subintervals between atoms
-dx = m/s;		% spacing between grid points
-L = k*m;		% total length of crystal
-M = round(L/dx);% size of MxM matrix
-x = 0:dx:L-dx;  % the grid on the interval [0,L)
-% xx = mod(x,m);	 % due to periodicity of V(x)...
+s = 20;				% number subintervals between atoms
+dx = m/s;			% spacing between grid points
+L = k*m;			% total length of crystal
+M = round(L/dx);		% size of MxM matrix
+x = 0:dx:L-dx;  		% the grid on the interval [0,L)
+% xx = mod(x,m);	 	% due to periodicity of V(x)...
 figure(1), plot(x,V(x))
 
-% This first matrix 'A' will represent the first term in the Hamiltonian, or the 
-% second spatial derivative term.
+% This first matrix 'A' will represent the first term in the Hamiltonian, or the second spatial derivative term.
 	% Define the size of the matrix 'A'
 		A = zeros(M,M);
 	% Boundary Conditions + something else???
@@ -60,10 +59,9 @@ figure(1), plot(x,V(x))
 		 		B(j,j) = V(x(j));
 		end
 
-% The Hamiltonian for the time-independent Schroedinger equation, H*phi = E*phi is
-H = -c*(1/(dx^2))*A + B;
-% where E will be the eigenvalues. Plot these values and compare to V(max) and
-% to theory. For the current configuration (23 Nov 2017), V(max) = 0.
+% The Hamiltonian for the time-independent Schroedinger equation, H*phi = E*phi is H = -c*(1/(dx^2))*A + B; where E will 
+% be the eigenvalues. Plot these values and compare to V(max) and to theory. For the current configuration (23 Nov 2017),
+% V(max) = 0.
 
 E = eig(H);
 figure(2)
